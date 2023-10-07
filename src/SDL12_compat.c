@@ -4380,6 +4380,9 @@ Scancode20to12(SDL_Scancode sc)
 #else
 #define CASESCANCODE20TO12(sc20, sc12, sc12mac) case SDL_SCANCODE_##sc20: return sc12
 #endif
+	CASESCANCODE20TO12(POWER, 0x74, 0x00);
+	CASESCANCODE20TO12(VOLUMEUP, 0x73, 0x00);
+	CASESCANCODE20TO12(VOLUMEDOWN, 0x72, 0x00);
     CASESCANCODE20TO12(0, 0x13, 0x1D);
     CASESCANCODE20TO12(1, 0x0A, 0x12);
     CASESCANCODE20TO12(2, 0x0B, 0x13);
@@ -4684,6 +4687,11 @@ EventFilter20to12(void *data, SDL_Event *event20)
             event12.key.keysym.scancode = Scancode20to12(event20->key.keysym.scancode);
             event12.key.keysym.mod = event20->key.keysym.mod;  /* these match up between 1.2 and 2.0! */
             event12.key.keysym.unicode = 0;
+			
+			// printf("keyup, scancode: %i=>%i sym: %i=>%i or %i\n",
+			// 	event20->key.keysym.scancode,event12.key.keysym.scancode,
+			// 	event20->key.keysym.sym,event12.key.keysym.sym,event20->key.keysym.scancode
+			// 	);
 
             /* If there's a pending KEYDOWN event, flush it on KEYUP. */
             FlushPendingKeydownEvent(0);
@@ -4711,6 +4719,11 @@ EventFilter20to12(void *data, SDL_Event *event20)
             PendingKeydownEvent.key.keysym.mod = event20->key.keysym.mod;  /* these match up between 1.2 and 2.0! */
             PendingKeydownEvent.key.keysym.unicode = 0;
 
+			// printf("keydown, scancode: %i=>%i sym: %i=>%i or %i\n",
+			// 	event20->key.keysym.scancode,PendingKeydownEvent.key.keysym.scancode,
+			// 	event20->key.keysym.sym,PendingKeydownEvent.key.keysym.sym,event20->key.keysym.scancode
+			// 	);
+				
             /* If Unicode is not enabled, flush all KEYDOWN events immediately. */
             if (!EnabledUnicode) {
                 FlushPendingKeydownEvent(0);
