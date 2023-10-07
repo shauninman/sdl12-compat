@@ -7,7 +7,7 @@ project(sdl12_compat
         VERSION 1.2.69
         LANGUAGES C)
 
-option(SDL12TESTS "Enable to build SDL-1.2 test programs" ON)
+option(SDL12TESTS "Enable to build SDL-1.2 test programs" OFF)
 option(SDL12DEVEL "Enable installing SDL-1.2 development headers" ON)
 option(STATICDEVEL "Enable installing static link library" OFF)
 
